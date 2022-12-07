@@ -1,0 +1,87 @@
+<main>
+    <div class="container p-5 my-5 bg-dark text-white">
+        <div style="margin-bottom: 30px;">
+            <h1>Complejo Deportivo Sarasa</h1>
+            <h3>Turnos online</h3>
+        </div>
+        <form [formGroup]="turnosForm" (ngSubmit)="reservarTurno()">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input class="form-control" type="text" formControlName="nombreControl">
+                    <div class="required" *ngIf="turnosForm.get('nombreControl')?.errors?.['required'] && turnosForm.get('nombreControl')?.invalid && turnosForm.get('nombreControl')?.dirty">El campo Nombre es requerido</div>
+                    <div class="required" *ngIf="turnosForm.get('nombreControl')?.errors?.['minlength'] && turnosForm.get('nombreControl')?.invalid && turnosForm.get('nombreControl')?.dirty">El campo Nombre debe tener al menos 3 caracteres</div>
+                </div>
+                <div class="col-md-6">
+                    <label for="apellido" class="form-label">Apellido</label>
+                    <input class="form-control" type="text" formControlName="apellidoControl">
+                    <div class="required" *ngIf="turnosForm.get('apellidoControl')?.errors?.['required'] && turnosForm.get('apellidoControl')?.invalid && turnosForm.get('apellidoControl')?.dirty">El campo Apellido es requerido</div>
+                    <div class="required" *ngIf="turnosForm.get('apellidoControl')?.errors?.['minlength'] && turnosForm.get('apellidoControl')?.invalid && turnosForm.get('apellidoControl')?.dirty">El campo Apellido debe tener al menos 3 caracteres</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="disciplina" class="form-label">Disciplina</label>
+                    <select
+                        class="form-control"
+                        formControlName="disciplinaControl"
+                    >
+                    <option selected value>Seleccione</option>
+                    <option *ngFor="let disciplina of disciplinas" [ngValue]="disciplina">
+                      {{ disciplina }}
+                    </option>
+                  </select>
+                  <div class="required" *ngIf="turnosForm.get('disciplinaControl')?.invalid && turnosForm.get('disciplinaControl')?.dirty">El campo Disciplina es requerido</div>
+                </div>
+                <div class="col-md-4">
+                    <label for="fecha" class="form-label">Fecha</label>
+                    <input class="form-control" type="date" formControlName="fechaTurnoControl">
+                    <div class="required" *ngIf="turnosForm.get('fechaTurnoControl')?.invalid && turnosForm.get('fechaTurnoControl')?.dirty">El campo Fecha es requerido</div>
+                </div>
+                <div class="col-md-4">    
+                    <label for="hora" class="form-label">Hora</label>
+                    <select
+                        class="form-control"
+                        formControlName="horaTurnoControl"
+                    >
+                    <option selected value>Seleccione</option>
+                    <option *ngFor="let hora of horas" [ngValue]="hora">
+                      {{ hora }}
+                    </option>
+                  </select>  
+                  <div class="required" *ngIf="turnosForm.get('horaTurnoControl')?.invalid && turnosForm.get('horaTurnoControl')?.dirty">El campo Hora es requerido</div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="d-grid gap-2">
+                    <button [ngClass]="reservaValida() ? 'btn btn-success' : 'btn btn-success disabled'" type="button" class="btn btn-success" type="submit" >Confirmar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container p-5 my-5 bg-dark text-white">
+        <h3>Turnos reservados</h3>
+        <table class="table table-dark">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Disciplina</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Hora</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let turnosReservado of turnosReservados">
+                  <th></th>
+                  <td>{{ turnosReservado.nombre }}</td>
+                  <td>{{ turnosReservado.apellido }}</td>
+                  <td>{{ turnosReservado.disciplina }}</td>
+                  <td>{{ turnosReservado.fecha }}</td>
+                  <td>{{ turnosReservado.hora }}hs</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
